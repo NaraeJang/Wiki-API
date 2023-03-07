@@ -88,13 +88,26 @@ app.route("/articles/:articleTitle")
         Article.replaceOne(
             {title: req.params.articleTitle},
             {title: req.body.title,
-            content: req.body.content}
+            content: req.body.content} 
         ).then(foundTheArticle => {
             res.send("Successfully updated the article.");
         }).catch(err => {
             res.send("No matching article was found to udpate.")
         });
 
+    })
+
+    .patch((req, res) => {
+        Article.updateOne({
+            title: req.params.articleTitle
+        },
+        {
+            $set: req.body
+        }).then(foundTheArticle => {
+            res.send("Successfully updated particular info in the article.");
+        }).catch(err => {
+            res.send("No matching article was found to udpate.")
+        });
     })
 
     .delete((req, res) => {
