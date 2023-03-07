@@ -80,16 +80,19 @@ app.route("/articles/:articleTitle")
         Article.findOne({
             title: req.params.articleTitle
         }).then(foundTheArticle => {
-                res.send(foundTheArticle);
-        }).catch(err => {res.send("No Articles found.")});
+            res.send(foundTheArticle);
+        }).catch(err => {
+            res.send("No Articles found.")
+        });
     })
 
     .put((req, res) => {
-        Article.replaceOne(
-            {title: req.params.articleTitle},
-            {title: req.body.title,
-            content: req.body.content} 
-        ).then(foundTheArticle => {
+        Article.replaceOne({
+            title: req.params.articleTitle
+        }, {
+            title: req.body.title,
+            content: req.body.content
+        }).then(foundTheArticle => {
             res.send("Successfully updated the article.");
         }).catch(err => {
             res.send("No matching article was found to udpate.")
@@ -100,8 +103,7 @@ app.route("/articles/:articleTitle")
     .patch((req, res) => {
         Article.updateOne({
             title: req.params.articleTitle
-        },
-        {
+        }, {
             $set: req.body
         }).then(foundTheArticle => {
             res.send("Successfully updated particular info in the article.");
@@ -111,7 +113,11 @@ app.route("/articles/:articleTitle")
     })
 
     .delete((req, res) => {
-
+        Article.deleteOne(
+        {title: req.params.articleTitle}
+        ).then( () => {
+            res.send("Successfully deleted the article.");
+        });
     });
 
 
