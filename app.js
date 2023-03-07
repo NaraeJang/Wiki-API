@@ -84,7 +84,16 @@ app.route("/articles/:articleTitle")
         }).catch(err => {res.send("No Articles found.")});
     })
 
-    .post((req, res) => {
+    .put((req, res) => {
+        Article.replaceOne(
+            {title: req.params.articleTitle},
+            {title: req.body.title,
+            content: req.body.content}
+        ).then(foundTheArticle => {
+            res.send("Successfully updated the article.");
+        }).catch(err => {
+            res.send("No matching article was found to udpate.")
+        });
 
     })
 
