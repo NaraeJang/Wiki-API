@@ -72,7 +72,11 @@ app.post("/articles", function (req, res) {
 
 //////////RESTful API: DELETE//////////
 app.delete("/articles", function (req, res) {
-
+    Article.deleteMany().then(result => {
+        res.send("Seccessfully deleted all articles.");
+    }).catch(err => {
+        console.log(err);
+    });
 });
 
 
