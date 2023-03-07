@@ -36,7 +36,7 @@ const Article = new mongoose.model('Article', articleSchema);
 
 
 
-
+//////////Request Targetting All Articles//////////
 app.route("/articles")
 
     .get(function (req, res) {
@@ -63,7 +63,7 @@ app.route("/articles")
         });
 
     })
-    
+
     .delete(function (req, res) {
         Article.deleteMany().then(result => {
             res.send("Seccessfully deleted all articles.");
@@ -73,8 +73,24 @@ app.route("/articles")
     });
 
 
+//////////Request Targetting A Specific Article//////////
+app.route("/articles/:articleTitle")
 
+    .get((req, res) => {
+        Article.findOne({
+            title: req.params.articleTitle
+        }).then(foundTheArticle => {
+                res.send(foundTheArticle);
+        }).catch(err => {res.send("No Articles found.")});
+    })
 
+    .post((req, res) => {
+
+    })
+
+    .delete((req, res) => {
+
+    });
 
 
 //////////Port Message//////////
